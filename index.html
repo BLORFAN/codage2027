@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📡 Chaîne d'Information - Codage Binaire & Hexadécimal</title>
+    <style>
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 2rem 1.5rem;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 2.5rem 2.8rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #0b3b5c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 4px solid #e2e8f0;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+        }
+
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #64748b;
+            margin-left: auto;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #1e4a6f;
+            margin-top: 2.8rem;
+            margin-bottom: 1rem;
+            border-left: 6px solid #3b82f6;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: #1e4a6f;
+            margin-top: 1.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            color: #0b3b5c;
+            margin-bottom: 0.3rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #f1f5f9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+            color: #0b3b5c;
+        }
+
+        .box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 1.8rem 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .box-blue {
+            background: #eff6ff;
+            border-left: 6px solid #3b82f6;
+        }
+
+        .box-green {
+            background: #f0fdf4;
+            border-left: 6px solid #22c55e;
+        }
+
+        .box-orange {
+            background: #fff7ed;
+            border-left: 6px solid #f59e0b;
+        }
+
+        .box-purple {
+            background: #faf5ff;
+            border-left: 6px solid #a855f7;
+        }
+
+        .box-red {
+            background: #fef2f2;
+            border-left: 6px solid #ef4444;
+        }
+
+        .box-gold {
+            background: #fffbeb;
+            border-left: 6px solid #facc15;
+        }
+
+        /* --- TABLEAUX --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: #1e293b;
+            color: #fff;
+            padding: 0.5rem 0.3rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 0.3rem 0.2rem;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* --- TABLE ASCII FULL GRID --- */
+        .ascii-grid {
+            overflow-x: auto;
+            margin: 1.2rem 0;
+        }
+
+        .ascii-grid table {
+            font-size: 0.75rem;
+            min-width: 700px;
+        }
+
+        .ascii-grid table th {
+            background: #0b3b5c;
+            color: #fff;
+            padding: 0.3rem 0.2rem;
+            font-weight: 600;
+        }
+
+        .ascii-grid table td {
+            padding: 0.2rem 0.1rem;
+            border: 1px solid #dbeafe;
+            background: #ffffff;
+        }
+
+        .ascii-grid .cell-ctrl {
+            color: #64748b;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .ascii-grid .cell-char {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #0b3b5c;
+        }
+
+        .ascii-grid .cell-hex {
+            display: block;
+            font-size: 0.6rem;
+            color: #3b82f6;
+            background: #eff6ff;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+
+        .ascii-grid .row-header {
+            background: #e2e8f0;
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: #1e293b;
+        }
+
+        /* --- CODE --- */
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1.2rem 1.6rem;
+            border-radius: 14px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            line-height: 1.6;
+        }
+
+        pre .comment { color: #94a3b8; font-style: italic; }
+        pre .keyword { color: #f472b6; }
+        pre .string { color: #a3e635; }
+        pre .number { color: #60a5fa; }
+
+        .inline-code {
+            font-family: 'Courier New', monospace;
+            background: #eef2f6;
+            padding: 0.1rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #0b3b5c;
+            font-weight: 600;
+        }
+
+        /* --- EXERCICES --- */
+        .exercice {
+            background: #ffffff;
+            border: 2px solid #dbeafe;
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            margin: 2.2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            transition: border-color 0.2s;
+        }
+
+        .exercice:hover {
+            border-color: #93c5fd;
+        }
+
+        .exercice .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.75rem;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.8rem;
+        }
+
+        .exercice .correction {
+            background: #f1f5f9;
+            border-radius: 14px;
+            padding: 1.2rem 1.6rem;
+            margin-top: 1.2rem;
+            border-left: 5px solid #22c55e;
+        }
+
+        .exercice .correction strong {
+            color: #15803d;
+        }
+
+        .exercice .correction .step {
+            margin-left: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .btn-toggle {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.6rem;
+        }
+
+        .btn-toggle:hover {
+            background: #cbd5e1;
+        }
+
+        .correction.hidden {
+            display: none;
+        }
+
+        /* --- SCHÉMA / ILLUSTRATION --- */
+        .schema {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem 1.5rem;
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            font-weight: 500;
+        }
+
+        .schema .step {
+            background: #fff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #dbeafe;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schema .arrow {
+            font-size: 1.8rem;
+            color: #94a3b8;
+        }
+
+        /* --- LAYOUT POUR RÉVISION CHAÎNES --- */
+        .chaines-recap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .chaines-recap > div {
+            flex: 1 1 200px;
+            background: #ffffff;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .chaines-recap .info { border-left: 6px solid #3b82f6; }
+        .chaines-recap .energie { border-left: 6px solid #f59e0b; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+                flex-wrap: wrap;
+            }
+            h1 small {
+                margin-left: 0;
+                width: 100%;
+            }
+            .schema {
+                flex-direction: column;
+                padding: 1.2rem;
+            }
+            .schema .arrow {
+                transform: rotate(90deg);
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.4rem 0.3rem;
+            }
+            .exercice {
+                padding: 1.2rem 1rem;
+            }
+            .chaines-recap {
+                flex-direction: column;
+            }
+            .ascii-grid table {
+                font-size: 0.6rem;
+                min-width: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.6rem;
+            }
+            .container {
+                padding: 1rem 0.8rem;
+                border-radius: 20px;
+            }
+            pre {
+                font-size: 0.8rem;
+                padding: 0.8rem 1rem;
+            }
+            .ascii-grid table {
+                font-size: 0.5rem;
+                min-width: 500px;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e4a6f;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ============================================ -->
+    <!-- TITRE PRINCIPAL                              -->
+    <!-- ============================================ -->
+    <h1>
+        📡 Chaîne d'Information
+        <small>Du signal au code binaire &amp; hexadécimal</small>
+    </h1>
+
+    <!-- ============================================ -->
+    <!-- RÉVISION : CHAÎNE D'ENERGIE / INFORMATION    -->
+    <!-- ============================================ -->
+    <div class="box box-gold" style="border-left-color:#f59e0b;">
+        <h2 style="margin-top:0; border-left: none; padding-left:0; font-size:1.6rem; color:#b45309;">📚 Révision : Chaîne d'information vs Chaîne d'énergie</h2>
+        <p style="font-weight:500; color:#1e293b;">Dans un système automatisé, on distingue deux grandes chaînes fonctionnelles :</p>
+
+        <div class="chaines-recap">
+            <div class="info">
+                <h4 style="color:#2563eb;">📡 Chaîne d'information</h4>
+                <p><strong>Rôle :</strong> Acquérir, traiter, transmettre et communiquer des <strong>données</strong>.</p>
+                <p style="font-size:0.95rem; color:#475569;"><em>Ex : capteur de température → signal numérique → affichage sur écran.</em></p>
+                <p style="font-size:0.9rem; background:#eff6ff; padding:0.3rem 0.8rem; border-radius:30px; display:inline-block;">🔢 C'est ici qu'intervient le <strong>codage binaire / hexa</strong></p>
+            </div>
+            <div class="energie">
+                <h4 style="color:#d97706;">⚡ Chaîne d'énergie</h4>
+                <p><strong>Rôle :</strong> Alimenter, distribuer, convertir et transmettre de la <strong>puissance</strong>.</p>
+                <p style="font-size:0.95rem; color:#475569;"><em>Ex : batterie → moteur → bras robotique.</em></p>
+                <p style="font-size:0.9rem; background:#fffbeb; padding:0.3rem 0.8rem; border-radius:30px; display:inline-block;">⚙️ Gère la partie <strong>physique / électrique</strong></p>
+            </div>
+        </div>
+
+        <div style="background:#f1f5f9; border-radius:12px; padding:0.8rem 1.2rem; margin-top:0.8rem;">
+            <p style="margin-bottom:0;"><strong>💡 Petit récap :</strong> La chaîne d'information est le <strong>cerveau</strong> (elle traite les données), la chaîne d'énergie est le <strong>muscle</strong> (elle agit physiquement). Le codage (binaire, ASCII, hexa) appartient exclusivement à la <strong>chaîne d'information</strong> pour numériser les signaux.</p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- INTRODUCTION CHAÎNE INFO (signal)           -->
+    <!-- ============================================ -->
+    <p style="font-size:1.1rem; color:#334155; margin-top:1.5rem;">
+        Dans une <strong>chaîne d'information</strong>, le signal capté par un capteur
+        est <strong>numérisé</strong> pour être traité par un système informatique.
+        Cette numérisation passe par le <strong>codage</strong> : on transforme
+        l'information en <span class="highlight">binaire</span> ou en
+        <span class="highlight">hexadécimal</span>.
+    </p>
+
+    <!-- Schéma simplifié -->
+    <div class="schema">
+        <span class="step">🌡️ Capteur</span>
+        <span class="arrow">→</span>
+        <span class="step">⚡ Signal analogique</span>
+        <span class="arrow">→</span>
+        <span class="step" style="background:#dbeafe; border-color:#3b82f6;">🔢 <strong>Codage</strong> (binaire / hexa)</span>
+        <span class="arrow">→</span>
+        <span class="step">💻 Traitement numérique</span>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 1. POURQUOI CODER ?                         -->
+    <!-- ============================================ -->
+    <h2>1. Pourquoi coder en binaire ?</h2>
+
+    <div class="box box-blue">
+        <p>
+            <strong>💡 Objectif :</strong> rendre l'information <em>compréhensible</em>
+            par une machine (ordinateur, microcontrôleur, etc.).
+        </p>
+        <p>
+            Un système électronique ne comprend que deux états :
+            <span class="highlight">0</span> (tension basse) et
+            <span class="highlight">1</span> (tension haute).
+            Le <strong>codage binaire</strong> est donc le langage natif de l'informatique.
+        </p>
+        <p>
+            <strong>👉 Exemple :</strong> le nombre <span class="inline-code">42</span>
+            s'écrit <span class="inline-code">101010</span> en binaire.
+            Chaque chiffre binaire est un <strong>bit</strong>.
+        </p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 2. CODAGE D'UN NOMBRE EN BINAIRE            -->
+    <!-- ============================================ -->
+    <h2>2. Coder un nombre en binaire</h2>
+
+    <div class="box">
+        <p>
+            On utilise la <strong>division successive par 2</strong>.
+            On note les restes (0 ou 1) de bas en haut.
+        </p>
+        <pre>
+            <span class="comment">// Exemple : coder 13 en binaire</span>
+            13 ÷ 2 = 6   reste <span class="number">1</span>
+            6  ÷ 2 = 3   reste <span class="number">0</span>
+            3  ÷ 2 = 1   reste <span class="number">1</span>
+            1  ÷ 2 = 0   reste <span class="number">1</span>
+
+            <span class="comment">// Lecture des restes de bas en haut → 1101</span>
+            <span class="string">13₁₀ = 1101₂</span>
+        </pre>
+
+        <div class="box box-green" style="margin-top:0.8rem;">
+            <strong>✅ À retenir :</strong> chaque bit a un poids (puissance de 2).
+            <span class="inline-code">1101₂</span> = 1×2³ + 1×2² + 0×2¹ + 1×2⁰ = 8+4+0+1 = <strong>13</strong>.
+        </div>
+    </div>
+
+    <!-- TABLEAU DES PUISSANCES DE 2 (INVERSÉ) -->
+    <div class="box" style="background:#f1f5f9;">
+        <h3 style="margin-top:0;">📊 Tableau des puissances de 2 (ordre décroissant pour extraire le binaire)</h3>
+        <p style="font-size:0.95rem; margin-bottom:0.5rem;">
+            <strong>🔍 Utilisation :</strong> Pour convertir un nombre décimal en binaire, comparez-le aux puissances de 2 de <strong>gauche à droite</strong> (de la plus grande à la plus petite). 
+            Si la puissance est ≤ au nombre restant, on note <span class="inline-code">1</span> et on soustrait, sinon on note <span class="inline-code">0</span>.
+        </p>
+        <table>
+            <thead>
+                <tr><th>Puissance</th><th>2¹⁰</th><th>2⁹</th><th>2⁸</th><th>2⁷</th><th>2⁶</th><th>2⁵</th><th>2⁴</th><th>2³</th><th>2²</th><th>2¹</th><th>2⁰</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Valeur</strong></td>
+                    <td>1024</td><td>512</td><td>256</td><td>128</td><td>64</td>
+                    <td>32</td><td>16</td><td>8</td><td>4</td><td>2</td><td>1</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.9rem; color:#475569; margin-top:0.2rem;">
+            💡 <strong>Exemple avec 13 :</strong> 
+            13 ≥ 8 → bit=1, reste 5 ; 
+            5 ≥ 4 → bit=1, reste 1 ; 
+            1 ≥ 2 → non (bit=0) ; 
+            1 ≥ 1 → bit=1 → <strong>1101₂</strong>.
+        </p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 3. CODAGE D'UN MOT (ASCII) - AVEC TABLEAU COMPLET -->
+    <!-- ============================================ -->
+    <h2>3. Coder un mot : le codage ASCII</h2>
+
+    <div class="box box-orange">
+        <p>
+            <strong>🔤 ASCII</strong> (American Standard Code for Information Interchange)
+            est une table qui associe à chaque caractère (lettre, chiffre, symbole)
+            un <strong>nombre</strong> compris entre 0 et 127.
+        </p>
+        <p>
+            Pour coder un mot, on code chaque caractère en binaire (sur 7 bits),
+            puis on concatène les résultats.
+        </p>
+    </div>
+
+    <!-- TABLEAU ASCII COMPLET (GRILLE 16x8) -->
+    <h3>Table ASCII complète (0 à 127)</h3>
+    <div class="ascii-grid">
+        <table>
+            <thead>
+                <tr>
+                    <th style="background:#1e293b;">⬇️\➡️</th>
+                    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+                    <th>8</th><th>9</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Ligne 0x (0-15) -->
+                <tr>
+                    <td class="row-header">0x</td>
+                    <td><span class="cell-ctrl">NUL</span><span class="cell-hex">00</span></td>
+                    <td><span class="cell-ctrl">SOH</span><span class="cell-hex">01</span></td>
+                    <td><span class="cell-ctrl">STX</span><span class="cell-hex">02</span></td>
+                    <td><span class="cell-ctrl">ETX</span><span class="cell-hex">03</span></td>
+                    <td><span class="cell-ctrl">EOT</span><span class="cell-hex">04</span></td>
+                    <td><span class="cell-ctrl">ENQ</span><span class="cell-hex">05</span></td>
+                    <td><span class="cell-ctrl">ACK</span><span class="cell-hex">06</span></td>
+                    <td><span class="cell-ctrl">BEL</span><span class="cell-hex">07</span></td>
+                    <td><span class="cell-ctrl">BS</span><span class="cell-hex">08</span></td>
+                    <td><span class="cell-ctrl">HT</span><span class="cell-hex">09</span></td>
+                    <td><span class="cell-ctrl">LF</span><span class="cell-hex">0A</span></td>
+                    <td><span class="cell-ctrl">VT</span><span class="cell-hex">0B</span></td>
+                    <td><span class="cell-ctrl">FF</span><span class="cell-hex">0C</span></td>
+                    <td><span class="cell-ctrl">CR</span><span class="cell-hex">0D</span></td>
+                    <td><span class="cell-ctrl">SO</span><span class="cell-hex">0E</span></td>
+                    <td><span class="cell-ctrl">SI</span><span class="cell-hex">0F</span></td>
+                </tr>
+                <!-- Ligne 1x (16-31) -->
+                <tr>
+                    <td class="row-header">1x</td>
+                    <td><span class="cell-ctrl">DLE</span><span class="cell-hex">10</span></td>
+                    <td><span class="cell-ctrl">DC1</span><span class="cell-hex">11</span></td>
+                    <td><span class="cell-ctrl">DC2</span><span class="cell-hex">12</span></td>
+                    <td><span class="cell-ctrl">DC3</span><span class="cell-hex">13</span></td>
+                    <td><span class="cell-ctrl">DC4</span><span class="cell-hex">14</span></td>
+                    <td><span class="cell-ctrl">NAK</span><span class="cell-hex">15</span></td>
+                    <td><span class="cell-ctrl">SYN</span><span class="cell-hex">16</span></td>
+                    <td><span class="cell-ctrl">ETB</span><span class="cell-hex">17</span></td>
+                    <td><span class="cell-ctrl">CAN</span><span class="cell-hex">18</span></td>
+                    <td><span class="cell-ctrl">EM</span><span class="cell-hex">19</span></td>
+                    <td><span class="cell-ctrl">SUB</span><span class="cell-hex">1A</span></td>
+                    <td><span class="cell-ctrl">ESC</span><span class="cell-hex">1B</span></td>
+                    <td><span class="cell-ctrl">FS</span><span class="cell-hex">1C</span></td>
+                    <td><span class="cell-ctrl">GS</span><span class="cell-hex">1D</span></td>
+                    <td><span class="cell-ctrl">RS</span><span class="cell-hex">1E</span></td>
+                    <td><span class="cell-ctrl">US</span><span class="cell-hex">1F</span></td>
+                </tr>
+                <!-- Ligne 2x (32-47) -->
+                <tr>
+                    <td class="row-header">2x</td>
+                    <td><span class="cell-ctrl">SP</span><span class="cell-hex">20</span></td>
+                    <td><span class="cell-char">!</span><span class="cell-hex">21</span></td>
+                    <td><span class="cell-char">"</span><span class="cell-hex">22</span></td>
+                    <td><span class="cell-char">#</span><span class="cell-hex">23</span></td>
+                    <td><span class="cell-char">$</span><span class="cell-hex">24</span></td>
+                    <td><span class="cell-char">%</span><span class="cell-hex">25</span></td>
+                    <td><span class="cell-char">&amp;</span><span class="cell-hex">26</span></td>
+                    <td><span class="cell-char">'</span><span class="cell-hex">27</span></td>
+                    <td><span class="cell-char">(</span><span class="cell-hex">28</span></td>
+                    <td><span class="cell-char">)</span><span class="cell-hex">29</span></td>
+                    <td><span class="cell-char">*</span><span class="cell-hex">2A</span></td>
+                    <td><span class="cell-char">+</span><span class="cell-hex">2B</span></td>
+                    <td><span class="cell-char">,</span><span class="cell-hex">2C</span></td>
+                    <td><span class="cell-char">-</span><span class="cell-hex">2D</span></td>
+                    <td><span class="cell-char">.</span><span class="cell-hex">2E</span></td>
+                    <td><span class="cell-char">/</span><span class="cell-hex">2F</span></td>
+                </tr>
+                <!-- Ligne 3x (48-63) -->
+                <tr>
+                    <td class="row-header">3x</td>
+                    <td><span class="cell-char">0</span><span class="cell-hex">30</span></td>
+                    <td><span class="cell-char">1</span><span class="cell-hex">31</span></td>
+                    <td><span class="cell-char">2</span><span class="cell-hex">32</span></td>
+                    <td><span class="cell-char">3</span><span class="cell-hex">33</span></td>
+                    <td><span class="cell-char">4</span><span class="cell-hex">34</span></td>
+                    <td><span class="cell-char">5</span><span class="cell-hex">35</span></td>
+                    <td><span class="cell-char">6</span><span class="cell-hex">36</span></td>
+                    <td><span class="cell-char">7</span><span class="cell-hex">37</span></td>
+                    <td><span class="cell-char">8</span><span class="cell-hex">38</span></td>
+                    <td><span class="cell-char">9</span><span class="cell-hex">39</span></td>
+                    <td><span class="cell-char">:</span><span class="cell-hex">3A</span></td>
+                    <td><span class="cell-char">;</span><span class="cell-hex">3B</span></td>
+                    <td><span class="cell-char">&lt;</span><span class="cell-hex">3C</span></td>
+                    <td><span class="cell-char">=</span><span class="cell-hex">3D</span></td>
+                    <td><span class="cell-char">&gt;</span><span class="cell-hex">3E</span></td>
+                    <td><span class="cell-char">?</span><span class="cell-hex">3F</span></td>
+                </tr>
+                <!-- Ligne 4x (64-79) -->
+                <tr>
+                    <td class="row-header">4x</td>
+                    <td><span class="cell-char">@</span><span class="cell-hex">40</span></td>
+                    <td><span class="cell-char">A</span><span class="cell-hex">41</span></td>
+                    <td><span class="cell-char">B</span><span class="cell-hex">42</span></td>
+                    <td><span class="cell-char">C</span><span class="cell-hex">43</span></td>
+                    <td><span class="cell-char">D</span><span class="cell-hex">44</span></td>
+                    <td><span class="cell-char">E</span><span class="cell-hex">45</span></td>
+                    <td><span class="cell-char">F</span><span class="cell-hex">46</span></td>
+                    <td><span class="cell-char">G</span><span class="cell-hex">47</span></td>
+                    <td><span class="cell-char">H</span><span class="cell-hex">48</span></td>
+                    <td><span class="cell-char">I</span><span class="cell-hex">49</span></td>
+                    <td><span class="cell-char">J</span><span class="cell-hex">4A</span></td>
+                    <td><span class="cell-char">K</span><span class="cell-hex">4B</span></td>
+                    <td><span class="cell-char">L</span><span class="cell-hex">4C</span></td>
+                    <td><span class="cell-char">M</span><span class="cell-hex">4D</span></td>
+                    <td><span class="cell-char">N</span><span class="cell-hex">4E</span></td>
+                    <td><span class="cell-char">O</span><span class="cell-hex">4F</span></td>
+                </tr>
+                <!-- Ligne 5x (80-95) -->
+                <tr>
+                    <td class="row-header">5x</td>
+                    <td><span class="cell-char">P</span><span class="cell-hex">50</span></td>
+                    <td><span class="cell-char">Q</span><span class="cell-hex">51</span></td>
+                    <td><span class="cell-char">R</span><span class="cell-hex">52</span></td>
+                    <td><span class="cell-char">S</span><span class="cell-hex">53</span></td>
+                    <td><span class="cell-char">T</span><span class="cell-hex">54</span></td>
+                    <td><span class="cell-char">U</span><span class="cell-hex">55</span></td>
+                    <td><span class="cell-char">V</span><span class="cell-hex">56</span></td>
+                    <td><span class="cell-char">W</span><span class="cell-hex">57</span></td>
+                    <td><span class="cell-char">X</span><span class="cell-hex">58</span></td>
+                    <td><span class="cell-char">Y</span><span class="cell-hex">59</span></td>
+                    <td><span class="cell-char">Z</span><span class="cell-hex">5A</span></td>
+                    <td><span class="cell-char">[</span><span class="cell-hex">5B</span></td>
+                    <td><span class="cell-char">\</span><span class="cell-hex">5C</span></td>
+                    <td><span class="cell-char">]</span><span class="cell-hex">5D</span></td>
+                    <td><span class="cell-char">^</span><span class="cell-hex">5E</span></td>
+                    <td><span class="cell-char">_</span><span class="cell-hex">5F</span></td>
+                </tr>
+                <!-- Ligne 6x (96-111) -->
+                <tr>
+                    <td class="row-header">6x</td>
+                    <td><span class="cell-char">`</span><span class="cell-hex">60</span></td>
+                    <td><span class="cell-char">a</span><span class="cell-hex">61</span></td>
+                    <td><span class="cell-char">b</span><span class="cell-hex">62</span></td>
+                    <td><span class="cell-char">c</span><span class="cell-hex">63</span></td>
+                    <td><span class="cell-char">d</span><span class="cell-hex">64</span></td>
+                    <td><span class="cell-char">e</span><span class="cell-hex">65</span></td>
+                    <td><span class="cell-char">f</span><span class="cell-hex">66</span></td>
+                    <td><span class="cell-char">g</span><span class="cell-hex">67</span></td>
+                    <td><span class="cell-char">h</span><span class="cell-hex">68</span></td>
+                    <td><span class="cell-char">i</span><span class="cell-hex">69</span></td>
+                    <td><span class="cell-char">j</span><span class="cell-hex">6A</span></td>
+                    <td><span class="cell-char">k</span><span class="cell-hex">6B</span></td>
+                    <td><span class="cell-char">l</span><span class="cell-hex">6C</span></td>
+                    <td><span class="cell-char">m</span><span class="cell-hex">6D</span></td>
+                    <td><span class="cell-char">n</span><span class="cell-hex">6E</span></td>
+                    <td><span class="cell-char">o</span><span class="cell-hex">6F</span></td>
+                </tr>
+                <!-- Ligne 7x (112-127) -->
+                <tr>
+                    <td class="row-header">7x</td>
+                    <td><span class="cell-char">p</span><span class="cell-hex">70</span></td>
+                    <td><span class="cell-char">q</span><span class="cell-hex">71</span></td>
+                    <td><span class="cell-char">r</span><span class="cell-hex">72</span></td>
+                    <td><span class="cell-char">s</span><span class="cell-hex">73</span></td>
+                    <td><span class="cell-char">t</span><span class="cell-hex">74</span></td>
+                    <td><span class="cell-char">u</span><span class="cell-hex">75</span></td>
+                    <td><span class="cell-char">v</span><span class="cell-hex">76</span></td>
+                    <td><span class="cell-char">w</span><span class="cell-hex">77</span></td>
+                    <td><span class="cell-char">x</span><span class="cell-hex">78</span></td>
+                    <td><span class="cell-char">y</span><span class="cell-hex">79</span></td>
+                    <td><span class="cell-char">z</span><span class="cell-hex">7A</span></td>
+                    <td><span class="cell-char">{</span><span class="cell-hex">7B</span></td>
+                    <td><span class="cell-char">|</span><span class="cell-hex">7C</span></td>
+                    <td><span class="cell-char">}</span><span class="cell-hex">7D</span></td>
+                    <td><span class="cell-char">~</span><span class="cell-hex">7E</span></td>
+                    <td><span class="cell-ctrl">DEL</span><span class="cell-hex">7F</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="box box-blue">
+        <p><strong>📝 Exemple : coder le mot "HI" en binaire</strong></p>
+        <ul style="margin-left:1.5rem; list-style-type:circle;">
+            <li>'H' → code décimal 72 (hexa 48) → binaire <span class="inline-code">1001000</span></li>
+            <li>'I' → code décimal 73 (hexa 49) → binaire <span class="inline-code">1001001</span></li>
+            <li>Mot complet : <span class="inline-code">1001000 1001001</span></li>
+        </ul>
+        <p style="margin-top:0.6rem;"><strong>🔤 Exemple "ABC" :</strong> A=65 (1000001), B=66 (1000010), C=67 (1000011) → <span class="inline-code">1000001 1000010 1000011</span></p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 4. CODAGE HEXADÉCIMAL                       -->
+    <!-- ============================================ -->
+    <h2>4. Codage hexadécimal</h2>
+
+    <div class="box box-purple">
+        <p>
+            <strong>🔢 Hexadécimal (base 16)</strong> : utilise 16 symboles :
+            <span class="inline-code">0 1 2 3 4 5 6 7 8 9 A B C D E F</span>.
+            <br>
+            Il est très utilisé car il permet de représenter un octet (8 bits)
+            par <strong>deux chiffres</strong> seulement.
+        </p>
+        <p>
+            <strong>📌 Conversion binaire → hexadécimal :</strong> on regroupe les bits par <strong>4</strong>
+            (de la droite vers la gauche), puis on convertit chaque groupe.
+        </p>
+    </div>
+
+    <h3>Table de correspondance binaire / hexadécimal</h3>
+    <table>
+        <thead>
+            <tr><th>Binaire (4 bits)</th><th>Hexadécimal</th><th>Décimal</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>0000</td><td>0</td><td>0</td></tr>
+            <tr><td>0001</td><td>1</td><td>1</td></tr>
+            <tr><td>0010</td><td>2</td><td>2</td></tr>
+            <tr><td>0011</td><td>3</td><td>3</td></tr>
+            <tr><td>0100</td><td>4</td><td>4</td></tr>
+            <tr><td>0101</td><td>5</td><td>5</td></tr>
+            <tr><td>0110</td><td>6</td><td>6</td></tr>
+            <tr><td>0111</td><td>7</td><td>7</td></tr>
+            <tr><td>1000</td><td>8</td><td>8</td></tr>
+            <tr><td>1001</td><td>9</td><td>9</td></tr>
+            <tr><td>1010</td><td>A</td><td>10</td></tr>
+            <tr><td>1011</td><td>B</td><td>11</td></tr>
+            <tr><td>1100</td><td>C</td><td>12</td></tr>
+            <tr><td>1101</td><td>D</td><td>13</td></tr>
+            <tr><td>1110</td><td>E</td><td>14</td></tr>
+            <tr><td>1111</td><td>F</td><td>15</td></tr>
+        </tbody>
+    </table>
+
+    <div class="box box-blue">
+        <p><strong>📝 Exemple :</strong> le nombre binaire <span class="inline-code">11010110₂</span></p>
+        <ul style="margin-left:1.5rem; list-style-type:circle;">
+            <li>Regroupement par 4 bits : <span class="inline-code">1101 0110</span></li>
+            <li>1101₂ = D₁₆ &nbsp; et &nbsp; 0110₂ = 6₁₆</li>
+            <li>Donc <span class="inline-code">11010110₂ = D6₁₆</span></li>
+        </ul>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 5. ASCII → HEXADÉCIMAL                      -->
+    <!-- ============================================ -->
+    <h2>5. Du texte à l'hexadécimal</h2>
+
+    <div class="box box-green">
+        <p>
+            Pour coder un texte en hexadécimal, on passe par le code ASCII
+            (décimal), que l'on convertit en hexadécimal.
+        </p>
+        <p><strong>📝 Exemple :</strong> coder le mot <span class="inline-code">"OK"</span> en hexadécimal</p>
+        <ul style="margin-left:1.5rem; list-style-type:circle;">
+            <li>'O' → code ASCII 79 → 79₁₀ = 4F₁₆</li>
+            <li>'K' → code ASCII 75 → 75₁₀ = 4B₁₆</li>
+            <li>Résultat : <span class="inline-code">4F 4B</span></li>
+        </ul>
+        <p style="margin-top:0.6rem;"><strong>🔤 Exemple "ABC" :</strong> A=41₁₆, B=42₁₆, C=43₁₆ → <span class="inline-code">41 42 43</span></p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- EXERCICES AVEC CORRECTIONS DÉTAILLÉES      -->
+    <!-- ============================================ -->
+    <h2 style="margin-top:3rem;">🧪 Exercices corrigés (détaillés)</h2>
+
+    <!-- EXERCICE 1 -->
+    <div class="exercice">
+        <span class="badge">Exercice 1</span>
+        <h3 style="margin-top:0;">Convertir en binaire</h3>
+        <p>Convertir les nombres décimaux suivants en binaire :</p>
+        <ul style="margin-left:1.8rem; list-style-type:decimal; font-weight:500;">
+            <li>a) <span class="inline-code">25</span></li>
+            <li>b) <span class="inline-code">47</span></li>
+            <li>c) <span class="inline-code">100</span></li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleCorrection('corr1')">Afficher / masquer la correction</button>
+        <div id="corr1" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <div class="step">
+                <p><strong>a) 25₁₀ → binaire</strong></p>
+                <p>On effectue les divisions successives par 2 :</p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>25 ÷ 2 = 12, <strong>reste 1</strong></li>
+                    <li>12 ÷ 2 = 6,  <strong>reste 0</strong></li>
+                    <li>6  ÷ 2 = 3,  <strong>reste 0</strong></li>
+                    <li>3  ÷ 2 = 1,  <strong>reste 1</strong></li>
+                    <li>1  ÷ 2 = 0,  <strong>reste 1</strong></li>
+                </ul>
+                <p>On lit les restes du dernier au premier → <span class="inline-code">11001₂</span>.</p>
+                <p>Vérification : 16 + 8 + 0 + 0 + 1 = 25.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>b) 47₁₀ → binaire</strong></p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>47 ÷ 2 = 23, <strong>reste 1</strong></li>
+                    <li>23 ÷ 2 = 11, <strong>reste 1</strong></li>
+                    <li>11 ÷ 2 = 5,  <strong>reste 1</strong></li>
+                    <li>5  ÷ 2 = 2,  <strong>reste 1</strong></li>
+                    <li>2  ÷ 2 = 1,  <strong>reste 0</strong></li>
+                    <li>1  ÷ 2 = 0,  <strong>reste 1</strong></li>
+                </ul>
+                <p>Lecture des restes → <span class="inline-code">101111₂</span>.</p>
+                <p>Vérification : 32 + 0 + 8 + 4 + 2 + 1 = 47.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>c) 100₁₀ → binaire</strong></p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>100 ÷ 2 = 50, <strong>reste 0</strong></li>
+                    <li>50  ÷ 2 = 25, <strong>reste 0</strong></li>
+                    <li>25  ÷ 2 = 12, <strong>reste 1</strong></li>
+                    <li>12  ÷ 2 = 6,  <strong>reste 0</strong></li>
+                    <li>6   ÷ 2 = 3,  <strong>reste 0</strong></li>
+                    <li>3   ÷ 2 = 1,  <strong>reste 1</strong></li>
+                    <li>1   ÷ 2 = 0,  <strong>reste 1</strong></li>
+                </ul>
+                <p>Lecture des restes → <span class="inline-code">1100100₂</span>.</p>
+                <p>Vérification : 64 + 32 + 0 + 0 + 4 + 0 + 0 = 100.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 2 -->
+    <div class="exercice">
+        <span class="badge">Exercice 2</span>
+        <h3 style="margin-top:0;">Binaire → décimal</h3>
+        <p>Convertir les nombres binaires suivants en décimal :</p>
+        <ul style="margin-left:1.8rem; list-style-type:decimal; font-weight:500;">
+            <li>a) <span class="inline-code">1010₂</span></li>
+            <li>b) <span class="inline-code">11111₂</span></li>
+            <li>c) <span class="inline-code">1001001₂</span></li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleCorrection('corr2')">Afficher / masquer la correction</button>
+        <div id="corr2" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <div class="step">
+                <p><strong>a) 1010₂</strong></p>
+                <p>On attribue les puissances de 2 : 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 8 + 0 + 2 + 0 = <span class="inline-code">10₁₀</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>b) 11111₂</strong></p>
+                <p>1×2⁴ + 1×2³ + 1×2² + 1×2¹ + 1×2⁰ = 16 + 8 + 4 + 2 + 1 = <span class="inline-code">31₁₀</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>c) 1001001₂</strong></p>
+                <p>1×2⁶ + 0×2⁵ + 0×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰ = 64 + 0 + 0 + 8 + 0 + 0 + 1 = <span class="inline-code">73₁₀</span>.</p>
+                <p>Note : 73 est le code ASCII du caractère 'I'.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 3 : "Bonjour" -->
+    <div class="exercice">
+        <span class="badge">Exercice 3</span>
+        <h3 style="margin-top:0;">Codage ASCII (mot long)</h3>
+        <p>Coder le mot <span class="inline-code">"Bonjour"</span> en binaire (utiliser la table ASCII).</p>
+        <button class="btn-toggle" onclick="toggleCorrection('corr3')">Afficher / masquer la correction</button>
+        <div id="corr3" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <p>Pour chaque caractère, on cherche son code décimal ASCII, puis on le convertit en binaire (7 bits).</p>
+            <ul style="list-style-type:none; padding-left:0;">
+                <li><strong>'B'</strong> → code 66 → 64+2 → 1000010₂</li>
+                <li><strong>'o'</strong> → code 111 → 64+32+8+4+2+1 → 1101111₂</li>
+                <li><strong>'n'</strong> → code 110 → 64+32+8+4+2 → 1101110₂</li>
+                <li><strong>'j'</strong> → code 106 → 64+32+8+2 → 1101010₂</li>
+                <li><strong>'o'</strong> → code 111 → 1101111₂</li>
+                <li><strong>'u'</strong> → code 117 → 64+32+16+4+1 → 1110101₂</li>
+                <li><strong>'r'</strong> → code 114 → 64+32+16+2 → 1110010₂</li>
+            </ul>
+            <p style="margin-top:0.6rem;"><strong>Mot complet :</strong> <span class="inline-code">1000010 1101111 1101110 1101010 1101111 1110101 1110010</span></p>
+        </div>
+    </div>
+
+    <!-- EXERCICE 4 : Binaire → Hexa -->
+    <div class="exercice">
+        <span class="badge">Exercice 4</span>
+        <h3 style="margin-top:0;">Binaire → Hexadécimal</h3>
+        <p>Convertir les nombres binaires suivants en hexadécimal :</p>
+        <ul style="margin-left:1.8rem; list-style-type:decimal; font-weight:500;">
+            <li>a) <span class="inline-code">11110000₂</span></li>
+            <li>b) <span class="inline-code">10101010₂</span></li>
+            <li>c) <span class="inline-code">110011001100₂</span></li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleCorrection('corr4')">Afficher / masquer la correction</button>
+        <div id="corr4" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <div class="step">
+                <p><strong>a) 11110000₂</strong></p>
+                <p>On regroupe par 4 bits : <span class="inline-code">1111 0000</span>.</p>
+                <p>1111₂ = 15 → F₁₆ ; 0000₂ = 0 → 0₁₆.</p>
+                <p>Résultat : <span class="inline-code">F0₁₆</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>b) 10101010₂</strong></p>
+                <p>Regroupement : <span class="inline-code">1010 1010</span>.</p>
+                <p>1010₂ = 10 → A₁₆ ; 1010₂ = A₁₆.</p>
+                <p>Résultat : <span class="inline-code">AA₁₆</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>c) 110011001100₂</strong> (12 bits)</p>
+                <p>On regroupe depuis la droite : <span class="inline-code">1100 1100 1100</span>.</p>
+                <p>1100₂ = 12 → C₁₆ ; donc chaque groupe donne C.</p>
+                <p>Résultat : <span class="inline-code">CCC₁₆</span>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 5 : Hexa → Binaire -->
+    <div class="exercice">
+        <span class="badge">Exercice 5</span>
+        <h3 style="margin-top:0;">Hexadécimal → Binaire</h3>
+        <p>Convertir les nombres hexadécimaux suivants en binaire :</p>
+        <ul style="margin-left:1.8rem; list-style-type:decimal; font-weight:500;">
+            <li>a) <span class="inline-code">3A₁₆</span></li>
+            <li>b) <span class="inline-code">FF₁₆</span></li>
+            <li>c) <span class="inline-code">1C4₁₆</span></li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleCorrection('corr5')">Afficher / masquer la correction</button>
+        <div id="corr5" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <div class="step">
+                <p><strong>a) 3A₁₆</strong></p>
+                <p>On convertit chaque chiffre hexa en 4 bits :</p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>3₁₆ = 0011₂</li>
+                    <li>A₁₆ = 1010₂</li>
+                </ul>
+                <p>Résultat : <span class="inline-code">00111010₂</span> (ou <span class="inline-code">111010₂</span> sans les zéros non significatifs).</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>b) FF₁₆</strong></p>
+                <p>F₁₆ = 1111₂, donc FF₁₆ = <span class="inline-code">11111111₂</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>c) 1C4₁₆</strong></p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>1₁₆ = 0001₂</li>
+                    <li>C₁₆ = 1100₂</li>
+                    <li>4₁₆ = 0100₂</li>
+                </ul>
+                <p>Résultat : <span class="inline-code">000111000100₂</span> (ou <span class="inline-code">111000100₂</span> sans les zéros).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 6 : "Hello" -->
+    <div class="exercice">
+        <span class="badge">Exercice 6 ★</span>
+        <h3 style="margin-top:0;">Texte → Hexadécimal</h3>
+        <p>Coder le mot <span class="inline-code">"Hello"</span> en hexadécimal.</p>
+        <button class="btn-toggle" onclick="toggleCorrection('corr6')">Afficher / masquer la correction</button>
+        <div id="corr6" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <p>Pour chaque caractère, on prend son code ASCII décimal, puis on le convertit en hexa :</p>
+            <ul style="list-style-type:none; padding-left:0;">
+                <li><strong>'H'</strong> → code 72 → 72₁₀ = 48₁₆ (car 4×16 + 8 = 72)</li>
+                <li><strong>'e'</strong> → code 101 → 101₁₀ = 65₁₆ (6×16 + 5 = 101)</li>
+                <li><strong>'l'</strong> → code 108 → 108₁₀ = 6C₁₆ (6×16 + 12 = 108)</li>
+                <li><strong>'l'</strong> → 6C₁₆</li>
+                <li><strong>'o'</strong> → code 111 → 111₁₀ = 6F₁₆ (6×16 + 15 = 111)</li>
+            </ul>
+            <p style="margin-top:0.6rem;"><strong>Mot complet :</strong> <span class="inline-code">48 65 6C 6C 6F</span>.</p>
+        </div>
+    </div>
+
+    <!-- EXERCICE 7 : ABC (sujet de base demandé) -->
+    <div class="exercice" style="border-color:#a855f7;">
+        <span class="badge" style="background:#a855f7;">Exercice 7 ✨</span>
+        <h3 style="margin-top:0;">Codage de base : "ABC"</h3>
+        <p>Coder le mot <span class="inline-code">"ABC"</span> :</p>
+        <ul style="margin-left:1.8rem; list-style-type:decimal; font-weight:500;">
+            <li>a) en binaire (ASCII)</li>
+            <li>b) en hexadécimal</li>
+        </ul>
+        <button class="btn-toggle" onclick="toggleCorrection('corr7')">Afficher / masquer la correction</button>
+        <div id="corr7" class="correction hidden">
+            <strong>✅ Corrigé détaillé :</strong>
+            <div class="step">
+                <p><strong>a) Binaire :</strong></p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>'A' → code ASCII 65 → binaire 1000001₂</li>
+                    <li>'B' → code ASCII 66 → binaire 1000010₂</li>
+                    <li>'C' → code ASCII 67 → binaire 1000011₂</li>
+                </ul>
+                <p>Résultat : <span class="inline-code">1000001 1000010 1000011</span>.</p>
+            </div>
+            <div class="step" style="margin-top:0.8rem;">
+                <p><strong>b) Hexadécimal :</strong></p>
+                <ul style="list-style-type:none; padding-left:0;">
+                    <li>'A' → 65₁₀ = 41₁₆</li>
+                    <li>'B' → 66₁₀ = 42₁₆</li>
+                    <li>'C' → 67₁₀ = 43₁₆</li>
+                </ul>
+                <p>Résultat : <span class="inline-code">41 42 43</span>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- RÉCAPITULATIF FINAL                        -->
+    <!-- ============================================ -->
+    <div style="margin-top:3rem; padding:1.8rem 2rem; background:linear-gradient(135deg,#0b3b5c,#1e4a6f); border-radius:24px; color:#fff;">
+        <h2 style="color:#fff; border-left-color:#facc15; margin-top:0;">📌 Synthèse</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1.2rem; margin-top:1rem;">
+            <div style="background:rgba(255,255,255,0.08); padding:1rem 1.2rem; border-radius:16px;">
+                <div style="font-size:1.8rem;">🔢</div>
+                <strong>Binaire</strong>
+                <p style="font-size:0.9rem; opacity:0.9; margin-top:0.2rem;">Langage des machines, base 2. Puissances de 2.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); padding:1rem 1.2rem; border-radius:16px;">
+                <div style="font-size:1.8rem;">🔤</div>
+                <strong>ASCII</strong>
+                <p style="font-size:0.9rem; opacity:0.9; margin-top:0.2rem;">Code numérique pour les caractères (A, B, C...).</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); padding:1rem 1.2rem; border-radius:16px;">
+                <div style="font-size:1.8rem;">🔣</div>
+                <strong>Hexadécimal</strong>
+                <p style="font-size:0.9rem; opacity:0.9; margin-top:0.2rem;">Base 16, compacte pour les octets (ex: 41 42 43).</p>
+            </div>
+        </div>
+        <p style="margin-top:1.2rem; opacity:0.9; border-top:1px solid rgba(255,255,255,0.15); padding-top:1rem;">
+            💡 La <strong>chaîne d'information</strong> commence par un capteur, passe par un
+            <strong>codeur</strong> (binaire / hexa), puis est traitée par le système.
+            La <strong>chaîne d'énergie</strong> gère la puissance, indépendamment du codage.
+        </p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CRÉDIT / FOOTER                             -->
+    <!-- ============================================ -->
+    <p style="text-align:center; margin-top:2.5rem; font-size:1rem; font-weight:500; color:#1e293b;">
+        ✨ Ce tutoriel est préparé par 
+        <span style="color:#2563eb; font-weight:700;">M.BLORFAN</span> 
+        <span style="color:#7c3aed; font-weight:700;">2026/2027</span>
+    </p>
+
+</div>
+
+<!-- ============================================ -->
+<!-- JAVASCRIPT : toggles pour les corrections    -->
+<!-- ============================================ -->
+<script>
+    function toggleCorrection(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>
